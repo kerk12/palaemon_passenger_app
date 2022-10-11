@@ -17,8 +17,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await authService.loginWithExistingCredentials();
       emit(user != null ? LoggedIn(user) : Anonymous());
     });
-    on<TryLogin>((event, emit) {
-
+    on<Register>((event, emit) async {
+      emit(Loading());
+      final user = await authService.registerToPersonsServer(event.mumbleName);
+      emit(LoggedIn(user));
     });
   }
 }

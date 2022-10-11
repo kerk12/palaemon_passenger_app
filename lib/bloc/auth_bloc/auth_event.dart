@@ -18,5 +18,11 @@ class TryLogin extends AuthEvent {
   List<Object> get props => [username, password];
 }
 
+class Register extends AuthEvent {
+  final String mumbleName;
+
+  Register(this.mumbleName);
+}
+
 class Logout extends AuthEvent {}
 
