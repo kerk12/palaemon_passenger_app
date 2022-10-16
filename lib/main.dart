@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:opus_dart/opus_dart.dart';
 import 'package:palaemon_passenger_app/bloc/auth_bloc/auth_bloc.dart';
 import 'package:palaemon_passenger_app/bloc/mumble_bloc/mumble_bloc.dart';
 import 'package:palaemon_passenger_app/config.dart';
@@ -8,8 +9,11 @@ import 'package:palaemon_passenger_app/screens/register_user/register_user_scree
 import 'package:palaemon_passenger_app/services/auth_service.dart';
 import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
+import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
 
-void main() {
+void main() async {
+  initOpus(await opus_flutter.load());
+  print(getOpusVersion());
   runApp(const MyApp());
 }
 

@@ -5,9 +5,8 @@ export 'models/chat_message.dart';
 export 'chat_storage_manager.dart';
 
 import 'package:dumble/dumble.dart';
-import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:opus_dart/opus_dart.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:palaemon_passenger_app/services/chat_service/chat_storage_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -60,20 +59,28 @@ class ChatService {
     const int sampleRate = 16000;
     const int channels = 1;
     // List<Uint8List> output = [];
+
     String dir = (await getApplicationDocumentsDirectory()).path;
     String filePath = "$dir/last.wav";
     File recfile = File(filePath);
     IOSink output = recfile.openWrite();
     output.add(Uint8List(wavHeaderSize));
     StreamOpusDecoder decoder = StreamOpusDecoder.bytes(floatOutput: false, sampleRate: sampleRate, channels: channels);
+    // await input.map<Uint8List>((frame) => frame.frame).cast<Uint8List?>().transform(decoder).cast<List<int>>().pipe(output);
     await input.map<Uint8List>((frame) => frame.frame).cast<Uint8List?>().transform(decoder).cast<List<int>>().pipe(output);
     await output.close();
     await _writeWavHeader(recfile);
 
 
-    final player = AudioPlayer();
-    await player.setSourceDeviceFile(filePath);
-    player.resume();
+    final player = FlutterSoundPlayer();
+    await player.openPlayer();
+    await player.startPlayer(
+      fromURI: filePath,
+      codec: Codec.pcm16WAV,
+      whenFinished: () {
+        player.closePlayer();
+      }
+    );
     // player.state.addListener(() {
     //   if (player.state.value == PlayerState.ended){
     //     player.dispose();
