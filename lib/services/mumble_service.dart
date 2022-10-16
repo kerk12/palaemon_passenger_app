@@ -25,7 +25,6 @@ class MumbleService {
     client = await MumbleClient.connect(
       options: _connectionOptions,
       onBadCertificate: (X509Certificate cert) => true,
-      useUdp: false
     );
     print(client!.getChannels());
     print(client!.getUsers());

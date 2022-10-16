@@ -11,6 +11,20 @@ part 'mumble_event.dart';
 part 'mumble_state.dart';
 
 typedef MessageReceivedFn = void Function(IncomingTextMessage msg);
+typedef PlayAudioFn = void Function(Stream<AudioFrame> input);
+
+class IncomingAudioListener with AudioListener {
+  final PlayAudioFn onPlayAudio;
+
+
+  IncomingAudioListener({required this.onPlayAudio});
+
+  @override
+  void onAudioReceived(Stream<AudioFrame> voiceData, AudioCodec codec, User? speaker, TalkMode talkMode) {
+    onPlayAudio(voiceData);
+  }
+
+}
 
 class ConnectionListener with MumbleClientListener {
   final Function onDisconnect;
@@ -90,6 +104,10 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
           // emit(Disconnected());
         }, onMessageReceived: (IncomingTextMessage message) {
           chatService.onRawMessageReceived(message.message);
+        }
+        ));
+        mumbleService.client!.audio.add(IncomingAudioListener(onPlayAudio: (stream) {
+          chatService.playAudioMessage(stream);
         }));
         _isInitialized = true;
       }
