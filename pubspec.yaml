@@ -42,6 +42,7 @@ dependencies:
   json_serializable: ^6.5.1
   build_runner: ^2.3.0
   shared_preferences: ^2.0.15
+  dumble: ^0.8.9
 
 dev_dependencies:
   flutter_test:
