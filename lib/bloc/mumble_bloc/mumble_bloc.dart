@@ -36,7 +36,7 @@ class ConnectionListener with MumbleClientListener {
 
   @override
   void onDone() {
-    // onDisconnect();
+    onDisconnect();
   }
 
   @override
