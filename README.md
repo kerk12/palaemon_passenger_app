@@ -14,3 +14,7 @@ Part of the [PALAEMON](https://palaemonproject.eu/) EU Project, developed in coo
 - `flutter pub get`
 - Ensure you have a working NDK (meaning no spaces in your SDK and Pub Cache paths).
 - `flutter run ...`
+
+## Contributing:
+
+- If you'd wish to contribute to the project, please pick from the open issues. **Other additions will not be accepted**.
