@@ -33,22 +33,18 @@ class MyApp extends StatelessWidget {
               authHeaders: config.authHeaders,
               authCookies: config.authCookies,
               authServer: config.authenticationServer,
-              clientSecret: config.clientSecret
-          );
+              clientSecret: config.clientSecret);
         },
         child: BlocProvider<AuthBloc>(
           create: (context) =>
-          AuthBloc(context.read<AuthService>())
-            ..add(Initialize()),
+              AuthBloc(context.read<AuthService>())..add(Initialize()),
           child: MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
             initialRoute: "landing",
-            routes: {
-              "landing": (context) => const LandingPage()
-            },
+            routes: {"landing": (context) => const LandingPage()},
           ),
         ),
       ),
@@ -63,22 +59,22 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
       if (state is LoggedIn) {
-        return RepositoryProvider<ChatService>(
-          create: (context) => ChatService(),
-          child: RepositoryProvider<MumbleService>(
-            lazy: false,
-            create: (context) {
-              final service = MumbleService(
-                  user: state.user, config: context.read<Config>());
-              return service;
-            },
-            child: BlocProvider<MumbleBloc>(
-              create: (context) => MumbleBloc(
-                mumbleService: context.read<MumbleService>(),
-                chatService: context.read<ChatService>(),
-              )..add(Connect()),
-              child: const MainScreen(),
+        return MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider<MumbleService>(
+              create: (context) => MumbleService(
+                  user: state.user, config: context.read<Config>()),
             ),
+            RepositoryProvider<ChatService>(
+              create: (context) => ChatService(),
+            ),
+          ],
+          child: BlocProvider<MumbleBloc>(
+            create: (context) => MumbleBloc(
+              mumbleService: context.read<MumbleService>(),
+              chatService: context.read<ChatService>(),
+            )..add(Connect()),
+            child: const MainScreen(),
           ),
         );
       }
