@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.palaemon_passenger_app">
+
    <application
         android:label="palaemon_passenger_app"
         android:name="${applicationName}"
