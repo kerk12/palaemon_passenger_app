@@ -10,10 +10,20 @@ import 'package:palaemon_passenger_app/services/auth_service.dart';
 import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
+import 'package:flutter_background/flutter_background.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   initOpus(await opus_flutter.load());
   print(getOpusVersion());
+  final androidConfig = FlutterBackgroundAndroidConfig(
+    notificationTitle: "flutter_background example app",
+    notificationText: "Background notification for keeping the example app running in the background",
+    notificationImportance: AndroidNotificationImportance.Default,
+    enableWifiLock: true
+  );
+  bool success = await FlutterBackground.initialize(androidConfig: androidConfig);
+
   runApp(const MyApp());
 }
 

@@ -48,6 +48,7 @@ dependencies:
   opus_dart: ^3.0.0
   opus_flutter: ^3.0.1
   record: ^4.4.0
+  flutter_background: ^1.1.0
 
 dev_dependencies:
   flutter_test:
