@@ -35,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(children: [
                 Expanded(
                   flex: 1,
-                  child: Image.asset(
-                      'assets/images/palaemon_logo_transparent.png'),
+                  child: Center(child:Image.asset(
+                      'assets/images/palaemon_ship_logo.png'),)
                 ),
                 Expanded(
                     flex: 3,

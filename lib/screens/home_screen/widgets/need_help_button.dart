@@ -22,6 +22,7 @@ class NeedHelpButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             fixedSize: const Size(0, 55),
             textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
                 fontSize: 18,
                ),
             backgroundColor: Color(int.parse(buttonColor)),
