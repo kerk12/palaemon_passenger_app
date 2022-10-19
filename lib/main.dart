@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               AuthBloc(context.read<AuthService>())..add(Initialize()),
           child: MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
