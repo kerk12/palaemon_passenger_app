@@ -148,7 +148,7 @@ class ChatService {
 
     await simulateAudioRecording(input).asyncMap((List<int> bytes) async {
       await Future.delayed(
-          Duration(milliseconds: frameTimeMs - 26));
+          Duration(milliseconds: frameTimeMs - 17));
       return bytes;
     })
     .transform(encoder)
