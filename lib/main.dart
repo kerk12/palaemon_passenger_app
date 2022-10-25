@@ -11,18 +11,19 @@ import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
 import 'package:flutter_background/flutter_background.dart';
+import 'package:palaemon_passenger_app/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initOpus(await opus_flutter.load());
   print(getOpusVersion());
-  final androidConfig = FlutterBackgroundAndroidConfig(
-    notificationTitle: "flutter_background example app",
-    notificationText: "Background notification for keeping the example app running in the background",
-    notificationImportance: AndroidNotificationImportance.Default,
-    enableWifiLock: true
-  );
-  bool success = await FlutterBackground.initialize(androidConfig: androidConfig);
+  const androidConfig = FlutterBackgroundAndroidConfig(
+      notificationTitle: "PALAEMON Passenger App",
+      notificationText:
+          "Background notification for keeping the Passenger App running in the background and receiving important messages.",
+      notificationImportance: AndroidNotificationImportance.Default,
+      enableWifiLock: true);
+  await FlutterBackground.initialize(androidConfig: androidConfig);
 
   runApp(const MyApp());
 }
@@ -33,8 +34,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<Config>(
-      create: (context) => ProductionConfig(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<Config>(
+          create: (context) => ProductionConfig(),
+        ),
+        RepositoryProvider<NotificationService>(
+          create: (context) => NotificationService(),
+        ),
+      ],
       child: RepositoryProvider<AuthService>(
         create: (context) {
           final config = context.read<Config>();
@@ -76,7 +84,8 @@ class LandingPage extends StatelessWidget {
                   user: state.user, config: context.read<Config>()),
             ),
             RepositoryProvider<ChatService>(
-              create: (context) => ChatService(),
+              create: (context) => ChatService(
+                  notificationService: context.read<NotificationService>()),
             ),
           ],
           child: BlocProvider<MumbleBloc>(
