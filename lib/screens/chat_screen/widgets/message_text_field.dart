@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MessageTextField extends StatelessWidget {
-  const MessageTextField({Key? key}) : super(key: key);
+  final TextEditingController messageController;
+  const MessageTextField(this.messageController, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      // controller: _titleController,
+      controller: messageController,
       decoration: InputDecoration(
-        labelText: 'Complain title',
+        labelText: 'Type your message here...',
         labelStyle: const TextStyle(
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(
             width: 2,
             style: BorderStyle.none,

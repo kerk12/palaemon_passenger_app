@@ -10,7 +10,8 @@ import 'package:palaemon_passenger_app/screens/chat_screen/widgets/message_text_
 import '../../services/mumble_service.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  ChatScreen({Key? key}) : super(key: key);
+  TextEditingController messageController = TextEditingController();
 
   static const _borderRadius = 26.0;
 
@@ -29,11 +30,11 @@ class ChatScreen extends StatelessWidget {
                 flex: 9,
                 child: ChatLog()),
             Expanded(child: Row(
-              children: const [
+              children: [
                 //set below flex = 3 if you use the ElevatedButton.icon widget from VoiceRecordButton, and set a padding with left and right equal to 8
-                Expanded(flex:1, child: VoiceRecordButton()),
-                Expanded(flex:5,child: MessageTextField()),
-                Expanded(flex:1, child: MessageSendButton())
+                const Expanded(flex:1, child: VoiceRecordButton()),
+                Expanded(flex:5,child: MessageTextField(messageController)),
+                Expanded(flex:1, child: MessageSendButton(messageController))
               ],
             ))
           ],
