@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dumble/dumble.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_background/flutter_background.dart';
 import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 
 import '../../services/mumble_service.dart';
@@ -100,8 +101,9 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
       emit(Connecting());
       await mumbleService.connect();
       if (!_isInitialized) {
-        mumbleService.addCallback(ConnectionListener(onDisconnect: () {
-          // emit(Disconnected());
+        mumbleService.addCallback(ConnectionListener(onDisconnect: () async {
+          await FlutterBackground.disableBackgroundExecution();
+          emit(Disconnected());
         }, onMessageReceived: (IncomingTextMessage message) {
           chatService.onRawMessageReceived(message.message);
         }
@@ -111,6 +113,7 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
         }));
         _isInitialized = true;
       }
+      await FlutterBackground.enableBackgroundExecution();
       emit(Connected());
     });
   }

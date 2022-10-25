@@ -10,6 +10,7 @@ import 'package:opus_dart/opus_dart.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:palaemon_passenger_app/services/chat_service/chat_storage_manager.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
+import 'package:palaemon_passenger_app/services/notification_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'models/chat_message.dart';
@@ -19,6 +20,7 @@ class ChatService {
   final StreamController<ChatMessage> _chatController = StreamController<ChatMessage>.broadcast();
   FlutterSoundPlayer? player;
   Stream<ChatMessage> get stream => _chatController.stream;
+  final NotificationService notificationService;
 
   Future<String> getLastVoiceMsgFilePath() async {
     String dir = (await getApplicationDocumentsDirectory()).path;
@@ -47,10 +49,12 @@ class ChatService {
   }
 
   late List<ChatMessage> messages;
-  ChatService() {
+  ChatService({required this.notificationService}) {
     ChatStorageManager.getChat().then((msgs) => messages = msgs);
     _chatController.stream.listen((message) {
       messages.add(message);
+      notificationService.showNotification(title: "New EC Message",
+          msg: "You have received a new message from the Bridge!");
       ChatStorageManager.storeChat(messages);
     });
   }
@@ -65,12 +69,12 @@ class ChatService {
   }
 
   void _onTextMessageReceived(String contents, DateTime creationDate) {
-    final msg = ChatMessage(contents: contents, type: MessageType.text, creationDate: creationDate);
+    final msg = ChatMessage(contents: contents, type: MessageType.text, creationDate: creationDate, origin: MessageOrigin.other);
     _chatController.add(msg);
   }
 
   void _onImageMessageReceived(String contents, DateTime creationDate) {
-    final msg = ChatMessage(contents: contents, type: MessageType.image, creationDate: creationDate);
+    final msg = ChatMessage(contents: contents, type: MessageType.image, creationDate: creationDate, origin: MessageOrigin.other);
     _chatController.add(msg);
   }
 

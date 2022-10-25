@@ -9,13 +9,21 @@ enum MessageType {
   text
 }
 
+enum MessageOrigin {
+  @JsonValue("me")
+  me,
+  @JsonValue("other")
+  other
+}
+
 @JsonSerializable()
 class ChatMessage {
   final String contents;
   final MessageType type;
   final DateTime creationDate;
+  final MessageOrigin origin;
 
-  ChatMessage({required this.contents, required this.type, required this.creationDate});
+  ChatMessage({required this.contents, required this.type, required this.creationDate, required this.origin});
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
   factory ChatMessage.fromJson(Map<String, dynamic> json) => _$ChatMessageFromJson(json);
