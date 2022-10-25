@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   NestedNavigationService.getNearest(context)
                       .push(route: "chat");
                 },
-                icon: const Icon(Icons.message_outlined))
+                icon: const Icon(Icons.chat_rounded))
           ],
         ),
         body: BlocBuilder<MumbleBloc, MumbleState>(
@@ -35,8 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(children: [
                 Expanded(
                   flex: 1,
-                  child: Center(child:Image.asset(
-                      'assets/images/palaemon_ship_logo.png'),)
+                  child: Column(
+                    children: [
+                      const Expanded(flex:1,child:Text("")),
+                      Expanded(flex:5,
+                        child: Center(child:Image.asset(
+                            'assets/images/palaemon_ship_logo.png'),),
+                      ),
+                    ],
+                  )
                 ),
                 Expanded(
                     flex: 3,
@@ -57,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       MediaQuery.of(context).size.width * 0.1,
                                 ),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: const [
                                     NeedHelpButton(

@@ -8,6 +8,7 @@ import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 class ChatLog extends StatefulWidget {
   const ChatLog({Key? key}) : super(key: key);
 
+
   @override
   State<ChatLog> createState() => _ChatLogState();
 }
@@ -15,6 +16,10 @@ class ChatLog extends StatefulWidget {
 class _ChatLogState extends State<ChatLog> {
   late StreamSubscription<ChatMessage> chatStream;
   List<ChatMessage> messages = [];
+
+  static const _borderRadius = 26.0;
+
+  final bool sender = true;
 
 
   @override
@@ -41,7 +46,27 @@ class _ChatLogState extends State<ChatLog> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(itemBuilder: (context, index) {
-      return ChatBubble(messages[index]);
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal:8, vertical: 4),
+        child: Align(
+
+          alignment: Alignment.centerLeft,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color(0xff1F9AD6),
+              borderRadius:  BorderRadius.only(
+                topLeft: Radius.circular(_borderRadius),
+                topRight: Radius.circular(_borderRadius),
+                bottomRight: Radius.circular(_borderRadius),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+              child: ChatBubble(messages[index]),
+            ),
+          ),
+        ),
+      );
     },
     itemCount: messages.length,);
   }

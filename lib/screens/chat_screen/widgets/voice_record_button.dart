@@ -56,19 +56,31 @@ class _VoiceRecordButtonState extends State<VoiceRecordButton> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: () {
-        _recordState == RecordState.stop ? _startRecording() : _stopRecording();
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: _recordState == RecordState.stop ?
-            Colors.green : Colors.red,
-        minimumSize: const Size.fromHeight(40)
-      ),
-      icon: const Icon(Icons.record_voice_over),
-      label: _recordState == RecordState.stop
-          ? const Text("Record")
-          : const Text("Stop"),
-    );
+    return  IconButton(onPressed: () {
+      _recordState == RecordState.stop ? _startRecording() : _stopRecording();
+    },
+      icon: _recordState == RecordState.stop ? const Icon(Icons.mic) : const Icon(Icons.stop_circle),
+      color: _recordState == RecordState.stop ? const Color(0xff1F9AD6) : Colors.red,
+      iconSize: 35);
+
+
+    // This below widget is another way of displaying the record button. If you want
+    // to use it change the chat_screen file as it is described.
+
+    //   ElevatedButton.icon(
+    //   onPressed: () {
+    //     _recordState == RecordState.stop ? _startRecording() : _stopRecording();
+    //   },
+    //   style: ElevatedButton.styleFrom(
+    //     backgroundColor: _recordState == RecordState.stop ?
+    //         Colors.green : Colors.red,
+    //     minimumSize: const Size.fromHeight(40)
+    //   ),
+    //   icon: const Icon(Icons.record_voice_over),
+    //   label: _recordState == RecordState.stop
+    //       ? const Text("Record")
+    //       : const Text("Stop"),
+    // );
+
   }
 }
