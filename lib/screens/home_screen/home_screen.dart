@@ -34,25 +34,27 @@ class _HomeScreenState extends State<HomeScreen> {
             if (state is Connected) {
               return Column(children: [
                 Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      const Expanded(flex:1,child:Text("")),
-                      Expanded(flex:5,
-                        child: Center(child:Image.asset(
-                            'assets/images/palaemon_ship_logo.png'),),
-                      ),
-                    ],
-                  )
-                ),
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        const Expanded(flex: 1, child: Text("")),
+                        Expanded(
+                          flex: 5,
+                          child: Center(
+                            child: Image.asset(
+                                'assets/images/palaemon_ship_logo.png'),
+                          ),
+                        ),
+                      ],
+                    )),
                 Expanded(
                     flex: 3,
                     child: Container(
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/wave_transparent.png'),
-                            fit: BoxFit.cover
-                          ),
+                              image: AssetImage(
+                                  'assets/images/wave_transparent.png'),
+                              fit: BoxFit.cover),
                         ),
                         child: Center(
                           child: Align(
@@ -65,23 +67,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: const [
                                     NeedHelpButton(
-                                        buttonColor: "0xffAD2828",
-                                        buttonName: "SOS"),
+                                      buttonColor: "0xffAD2828",
+                                      buttonName: "SOS",
+                                      buttonOutput: "SOS",
+                                    ),
                                     NeedHelpButton(
                                         buttonColor: "0xff7dca5c",
-                                        buttonName: "Call Me"),
+                                        buttonName: "Call Me",
+                                        buttonOutput: "CALL_ME"),
                                     NeedHelpButton(
                                         buttonColor: "0xffD9C452",
-                                        buttonName: "I feel sick"),
+                                        buttonName: "I feel sick",
+                                        buttonOutput: "SICK"),
                                     NeedHelpButton(
                                         buttonColor: "0xffED8721",
-                                        buttonName: "My family is at Risk"),
+                                        buttonName: "My family is at Risk",
+                                        buttonOutput: "FAMILY"),
                                     NeedHelpButton(
-                                        buttonColor: "0xffF26321",
-                                        buttonName: "Report an Incident"),
+                                      buttonColor: "0xffF26321",
+                                      buttonName: "Report an Incident",
+                                      buttonOutput: "ACCIDENT",
+                                    ),
                                   ],
                                 ),
                               ),
