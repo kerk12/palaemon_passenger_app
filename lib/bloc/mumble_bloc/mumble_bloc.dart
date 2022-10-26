@@ -13,6 +13,7 @@ part 'mumble_state.dart';
 
 typedef MessageReceivedFn = void Function(IncomingTextMessage msg);
 typedef PlayAudioFn = void Function(Stream<AudioFrame> input);
+typedef ChannelChangeFn = void Function(Channel newChannel);
 
 class IncomingAudioListener with AudioListener {
   final PlayAudioFn onPlayAudio;

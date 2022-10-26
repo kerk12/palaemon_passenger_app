@@ -53,8 +53,10 @@ class ChatService {
     ChatStorageManager.getChat().then((msgs) => messages = msgs);
     _chatController.stream.listen((message) {
       messages.add(message);
-      notificationService.showNotification(title: "New EC Message",
-          msg: "You have received a new message from the Bridge!");
+      if (message.origin != MessageOrigin.me) {
+        notificationService.showNotification(title: "New EC Message",
+            msg: "You have received a new message from the Bridge!");
+      }
       ChatStorageManager.storeChat(messages);
     });
   }
@@ -68,14 +70,21 @@ class ChatService {
     _onTextMessageReceived("Hello", DateTime.now());
   }
 
+  static ChatMessage createSelfSentMessage(String msg) =>
+    ChatMessage(contents: msg, type: MessageType.text, creationDate: DateTime.now(), origin: MessageOrigin.me);
+
+  void addMessageToStream(ChatMessage message) =>
+    _chatController.add(message);
+
+
   void _onTextMessageReceived(String contents, DateTime creationDate) {
     final msg = ChatMessage(contents: contents, type: MessageType.text, creationDate: creationDate, origin: MessageOrigin.other);
-    _chatController.add(msg);
+    addMessageToStream(msg);
   }
 
   void _onImageMessageReceived(String contents, DateTime creationDate) {
     final msg = ChatMessage(contents: contents, type: MessageType.image, creationDate: creationDate, origin: MessageOrigin.other);
-    _chatController.add(msg);
+    addMessageToStream(msg);
   }
 
   Future<void> _writeWavHeader(File file) async {
