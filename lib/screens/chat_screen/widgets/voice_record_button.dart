@@ -26,6 +26,7 @@ class _VoiceRecordButtonState extends State<VoiceRecordButton> {
   void initState() {
     chatService = context.read<ChatService>();
     mumbleService = context.read<MumbleService>();
+
     _recordSub = _recorder.onStateChanged().listen((recordState) {
       setState(() {
         _recordState = recordState;
@@ -57,10 +58,10 @@ class _VoiceRecordButtonState extends State<VoiceRecordButton> {
   @override
   Widget build(BuildContext context) {
     return  IconButton(onPressed: () {
-      _recordState == RecordState.stop ? _startRecording() : _stopRecording();
+        _recordState == RecordState.stop ? _startRecording() : _stopRecording();
     },
       icon: _recordState == RecordState.stop ? const Icon(Icons.mic) : const Icon(Icons.stop_circle),
-      color: _recordState == RecordState.stop ? const Color(0xff1F9AD6) : Colors.red,
+      color: _recordState == RecordState.stop ? const Color(0xff1F9AD6):Colors.red,
       iconSize: 35);
 
 

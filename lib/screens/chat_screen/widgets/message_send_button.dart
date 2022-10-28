@@ -20,7 +20,7 @@ class MessageSendButton extends StatelessWidget {
         messageController.clear();
       },
       icon: const Icon(Icons.send),
-      color: const  Color(0xff1F9AD6),
+      color: const Color(0xff1F9AD6),
       iconSize: 35,);
   }
 }
