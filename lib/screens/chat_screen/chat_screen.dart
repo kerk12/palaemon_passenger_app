@@ -24,33 +24,40 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageController = TextEditingController();
 
-  late StreamSubscription<ChatMessage> chatStream;
-  List<ChatMessage> messages = [];
+  StreamSubscription<ChatMessage>? chatStream;
+  bool _messagingDisabled = true;
 
   @override
   void initState() {
     super.initState();
     final ms = context.read<ChatService>();
 
-    messages = ms.messages;
+    _messagingDisabled = ms.messages.isEmpty;
 
-    chatStream = ms.stream.listen((event) {
-      setState(() {
-        messages = ms.messages;
+    if (_messagingDisabled) {
+      chatStream = ms.stream.listen((event) {
+          // If messaging is disabled and the user receives a message, set to enabled.
+          setState(() {
+            _messagingDisabled = false;
+          });
+          // Afterwards, cancel the subscription (not needed anymore).
+          chatStream!.cancel();
       });
-    });
+    }
+
   }
 
 
   @override
   void dispose() async {
     super.dispose();
-    await chatStream.cancel();
+    if (chatStream != null){
+      await chatStream!.cancel();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ms = context.read<MumbleService>();
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -62,14 +69,14 @@ class _ChatScreenState extends State<ChatScreen> {
            const Expanded(
                 flex: 9,
                 child: ChatLog()),
-            Expanded(child: Row(
+            !_messagingDisabled ? Expanded(child: Row(
               children: [
                 //set below flex = 3 if you use the ElevatedButton.icon widget from VoiceRecordButton, and set a padding with left and right equal to 8
                 const Expanded(flex:1, child: VoiceRecordButton()),
-                Expanded(flex:5,child: MessageTextField(messageController, messages)),
-                Expanded(flex:1, child: MessageSendButton(messageController, messages))
+                Expanded(flex:5,child: MessageTextField(messageController)),
+                Expanded(flex:1, child: MessageSendButton(messageController))
               ],
-            ))
+            )) : const SizedBox.shrink()
           ],
         ),
       ),

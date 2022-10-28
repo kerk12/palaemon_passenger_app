@@ -4,14 +4,12 @@ import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 
 class MessageTextField extends StatelessWidget {
   final TextEditingController messageController;
-  final List<ChatMessage> messages;
-  const MessageTextField(this.messageController, this.messages, {Key? key}) : super(key: key);
+  const MessageTextField(this.messageController, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: messageController,
-      enabled: messages.isEmpty ? false: true,
       decoration: InputDecoration(
         labelText: 'Type your message here...',
         labelStyle: const TextStyle(

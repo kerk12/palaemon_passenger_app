@@ -5,8 +5,7 @@ import 'package:palaemon_passenger_app/services/mumble_service.dart';
 
 class MessageSendButton extends StatelessWidget {
   final TextEditingController messageController;
-  final List<ChatMessage> messages;
-  const MessageSendButton(this.messageController, this.messages, {Key? key}) : super(key: key);
+  const MessageSendButton(this.messageController, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +14,13 @@ class MessageSendButton extends StatelessWidget {
 
     return IconButton(
       onPressed:() {
-        if(messages.isNotEmpty){
-          final message = ChatService.createSelfSentMessage(messageController.text);
-          mumbleService.sendMessage(message);
-          chatService.addMessageToStream(message);
-          messageController.clear();
-        }
-        else{
-          null;
-        }
+        final message = ChatService.createSelfSentMessage(messageController.text);
+        mumbleService.sendMessage(message);
+        chatService.addMessageToStream(message);
+        messageController.clear();
       },
       icon: const Icon(Icons.send),
-      color: messages.isNotEmpty ? const  Color(0xff1F9AD6):Colors.grey,
+      color: const Color(0xff1F9AD6),
       iconSize: 35,);
   }
 }

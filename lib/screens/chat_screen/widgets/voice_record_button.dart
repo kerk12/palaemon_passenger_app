@@ -17,8 +17,6 @@ class VoiceRecordButton extends StatefulWidget {
 
 class _VoiceRecordButtonState extends State<VoiceRecordButton> {
   final _recorder = Record();
-  late StreamSubscription<ChatMessage> chatStream;
-  List<ChatMessage> messages = [];
   StreamSubscription<RecordState>? _recordSub;
   RecordState _recordState = RecordState.stop;
   late ChatService chatService;
@@ -29,14 +27,6 @@ class _VoiceRecordButtonState extends State<VoiceRecordButton> {
     chatService = context.read<ChatService>();
     mumbleService = context.read<MumbleService>();
 
-    final ms = context.read<ChatService>();
-    messages = ms.messages;
-
-    chatStream = ms.stream.listen((event) {
-      setState(() {
-        messages = ms.messages;
-      });
-    });
     _recordSub = _recorder.onStateChanged().listen((recordState) {
       setState(() {
         _recordState = recordState;
@@ -68,15 +58,10 @@ class _VoiceRecordButtonState extends State<VoiceRecordButton> {
   @override
   Widget build(BuildContext context) {
     return  IconButton(onPressed: () {
-      if (messages.isNotEmpty) {
         _recordState == RecordState.stop ? _startRecording() : _stopRecording();
-      }else {
-        null;
-      }
     },
       icon: _recordState == RecordState.stop ? const Icon(Icons.mic) : const Icon(Icons.stop_circle),
-      color: messages.isEmpty ? Colors.grey: _recordState == RecordState.stop ? const Color(0xff1F9AD6):Colors.red,
-      // messages.isEmpty ? Colors.grey : (_recordState == RecordState.stop ? const Color(0xff1F9AD6) : Colors.red),
+      color: _recordState == RecordState.stop ? const Color(0xff1F9AD6):Colors.red,
       iconSize: 35);
 
 
