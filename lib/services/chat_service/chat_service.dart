@@ -62,6 +62,18 @@ class ChatService {
   }
 
   void onRawMessageReceived(String msgJson) {
+    // Detect image messages by filtering for the base64 header
+    final imageRegex = RegExp(r'data:image\/([a-zA-Z]*);base64,(?<image>[^\"]*)');
+
+    if (imageRegex.hasMatch(msgJson)) {
+      final match = imageRegex.firstMatch(msgJson);
+      final imgB64 = match!.namedGroup("image");
+
+      // Decode the URL Encoding and remove spaces, if they exist.
+      _onImageMessageReceived(Uri.decodeComponent(imgB64!).replaceAll(" ", ""), DateTime.now());
+      return;
+    }
+
     _onTextMessageReceived(msgJson, DateTime.now());
     // TODO Catch image messages...
   }

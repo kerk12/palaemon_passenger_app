@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:palaemon_passenger_app/services/chat_service/models/chat_message.dart';
 
@@ -10,7 +12,7 @@ class ChatBubble extends StatelessWidget {
     if (_message.type == MessageType.text) {
       return Text(_message.contents);
     }
-    // TODO Add image bubbles
-    return Text(_message.contents);
+
+    return Image.memory(base64Decode(_message.contents));
   }
 }
