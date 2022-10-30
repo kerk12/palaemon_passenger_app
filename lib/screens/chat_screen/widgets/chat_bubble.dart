@@ -10,7 +10,11 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_message.type == MessageType.text) {
-      return Text(_message.contents);
+      return Text(_message.contents, style: TextStyle(
+        color: _message.origin == MessageOrigin.me
+            ? Colors.white
+            : null
+      ),);
     }
 
     return Image.memory(base64Decode(_message.contents));
