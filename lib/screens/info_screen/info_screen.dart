@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key? key}) : super(key: key);
+
+  static const textStyling = TextStyle(fontSize: 18, color: Colors.black54);
+  static const linkStyling = TextStyle(fontSize: 18, color: Color(0xff1F9AD6), decoration: TextDecoration.underline,);
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +27,18 @@ class InfoScreen extends StatelessWidget {
                   ]
               ),
               const SizedBox(height: 15),
-              const Text("Developed by the UAegean | i4m Lab, and the PALAEMON Consortium", style: TextStyle(fontSize: 18, color: Colors.black54), textAlign: TextAlign.justify,),
-
-
+              Wrap(
+                children: [
+                  const Text("Developed by the , ", style: textStyling),
+                  InkWell(child: const Text("UAegean | i4m Lab",style: linkStyling),onTap: () => launch('http://www.atlantis-group.gr/i4Mlab/'),),
+                  const Text(" and the ",style: textStyling),
+                  InkWell(child:const Text("PALAEMON Consortium", style: linkStyling),onTap: () => launchUrlString('https://palaemonproject.eu/'),),
+                ],
+              ),
             ],
-
           ),
-
         )
-
     );
-
   }
 }
 
