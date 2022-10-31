@@ -14,7 +14,7 @@ class RegisterUser extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-              flex: 1,
+              flex: 2,
               child: Column(
                 children: [
                   const Expanded(flex: 1, child: Text("")),
@@ -25,9 +25,16 @@ class RegisterUser extends StatelessWidget {
                           'assets/images/palaemon_ship_logo.png'),
                     ),
                   ),
+                  Flexible(child: const Text("Passenger Registration",
+                      style: TextStyle(
+                          fontSize: 25,
+                        fontWeight: FontWeight.bold
+                      )
+                  )),
                 ],
               )),
-          Expanded(flex:3, child: Container(
+
+          Expanded(flex:2, child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(

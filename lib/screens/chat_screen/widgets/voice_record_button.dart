@@ -61,7 +61,7 @@ class _VoiceRecordButtonState extends State<VoiceRecordButton> {
         _recordState == RecordState.stop ? _startRecording() : _stopRecording();
         _recordState == RecordState.record ? ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.green,
-          content: Text("Successful Voice Message Sent"),
+          content: Text("Voice Message Sent Successfully!"),
         )):null;
     },
       icon: _recordState == RecordState.stop ? const Icon(Icons.mic) : const Icon(Icons.stop_circle),

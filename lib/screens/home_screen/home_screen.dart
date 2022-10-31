@@ -37,18 +37,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     flex: 1,
                     child: Column(
                       children: [
-                        const Expanded(flex: 1, child: Text("")),
                         Expanded(
-                          flex: 5,
+                          flex: 3,
                           child: Center(
                             child: Image.asset(
                                 'assets/images/palaemon_ship_logo.png'),
                           ),
                         ),
+
                       ],
                     )),
                 Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: Container(
                         decoration: const BoxDecoration(
                           image: DecorationImage(
@@ -56,46 +56,60 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'assets/images/wave_transparent.png'),
                               fit: BoxFit.cover),
                         ),
-                        child: Center(
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                      MediaQuery.of(context).size.width * 0.1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(child: const Text("In case of emergency, you can press any of the buttons below and a member of the crew will be with you shortly to provide assistance.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 15
                                 ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: const [
-                                    NeedHelpButton(
-                                      buttonColor: "0xffAD2828",
-                                      buttonName: "SOS",
-                                      buttonOutput: "SOS",
+                              )),
+                              Center(
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SingleChildScrollView(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            MediaQuery.of(context).size.width * 0.1,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: const [
+                                          NeedHelpButton(
+                                            buttonColor: "0xffAD2828",
+                                            buttonName: "SOS",
+                                            buttonOutput: "SOS",
+                                          ),
+                                          NeedHelpButton(
+                                              buttonColor: "0xff7dca5c",
+                                              buttonName: "Call Me",
+                                              buttonOutput: "CALL_ME"),
+                                          NeedHelpButton(
+                                              buttonColor: "0xffD9C452",
+                                              buttonName: "I feel sick",
+                                              buttonOutput: "SICK"),
+                                          NeedHelpButton(
+                                              buttonColor: "0xffED8721",
+                                              buttonName: "My family is at Risk",
+                                              buttonOutput: "FAMILY"),
+                                          NeedHelpButton(
+                                            buttonColor: "0xffF26321",
+                                            buttonName: "Report an Incident",
+                                            buttonOutput: "ACCIDENT",
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    NeedHelpButton(
-                                        buttonColor: "0xff7dca5c",
-                                        buttonName: "Call Me",
-                                        buttonOutput: "CALL_ME"),
-                                    NeedHelpButton(
-                                        buttonColor: "0xffD9C452",
-                                        buttonName: "I feel sick",
-                                        buttonOutput: "SICK"),
-                                    NeedHelpButton(
-                                        buttonColor: "0xffED8721",
-                                        buttonName: "My family is at Risk",
-                                        buttonOutput: "FAMILY"),
-                                    NeedHelpButton(
-                                      buttonColor: "0xffF26321",
-                                      buttonName: "Report an Incident",
-                                      buttonOutput: "ACCIDENT",
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         )))
               ]);

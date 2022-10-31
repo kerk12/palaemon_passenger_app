@@ -56,12 +56,15 @@ class RegisterUserForm extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 4,),
-              const Text("Please only use a combination of lowercase letters, uppercase letters and underscored (_)",
+              const Text("Please only use a combination of lowercase letters, uppercase letters and underscores (_)",
                 style: TextStyle(color: Colors.white70,fontSize: 12, fontWeight:FontWeight.bold), textAlign: TextAlign.justify,),
               const SizedBox(height: 12,),
               SizedBox(
                 width:180,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.white,
+                    foregroundColor: Colors.black
+                  ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       context.read<AuthBloc>().add(Register(mumbleUserController.text));
