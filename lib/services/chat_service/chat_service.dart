@@ -95,8 +95,12 @@ class ChatService {
     String? sound;
     for (int i = 1; i < splitted.length; i++) {
       final spl = splitted[i];
-      if (spl.trim().toLowerCase().startsWith("sound")) {
-        sound = spl.trim().toLowerCase().split(" ")[1];
+      try {
+        if (spl.trim().toLowerCase().startsWith("sound")) {
+          sound = spl.trim().toLowerCase().split(" ")[1];
+        }
+      } on Exception {
+        continue;
       }
     }
     return ChatMessage(contents: splitted[0], type: MessageType.text, creationDate: DateTime.now(), origin: MessageOrigin.other, sound: sound);
