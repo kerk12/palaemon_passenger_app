@@ -22,8 +22,9 @@ class ChatMessage {
   final MessageType type;
   final DateTime creationDate;
   final MessageOrigin origin;
+  String? sound;
 
-  ChatMessage({required this.contents, required this.type, required this.creationDate, required this.origin});
+  ChatMessage({required this.contents, required this.type, required this.creationDate, required this.origin, this.sound});
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
   factory ChatMessage.fromJson(Map<String, dynamic> json) => _$ChatMessageFromJson(json);

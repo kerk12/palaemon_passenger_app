@@ -12,7 +12,7 @@ class NotificationService {
   }
 
   Future<void> showNotification(
-      {required String title, required String msg, bool vibration = false, int id = 0}) async {
+      {required String title, required String msg, bool vibration = false, int id = 0, String? sound}) async {
     // Define vibration pattern
     var vibrationPattern = Int64List(4);
     vibrationPattern[0] = 0;
@@ -29,6 +29,7 @@ class NotificationService {
         importance: Importance.max,
         priority: Priority.high,
         vibrationPattern: vibration ? vibrationPattern : null,
+        sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
         enableVibration: vibration);
 
     var notificationDetails = NotificationDetails(

@@ -55,7 +55,9 @@ class ChatService {
       messages.add(message);
       if (message.origin != MessageOrigin.me) {
         notificationService.showNotification(title: "New EC Message",
-            msg: "You have received a new message from the Bridge!");
+          msg: "You have received a new message from the Bridge!",
+          sound: message.sound
+        );
       }
       ChatStorageManager.storeChat(messages);
     });
@@ -88,9 +90,20 @@ class ChatService {
   void addMessageToStream(ChatMessage message) =>
     _chatController.add(message);
 
+  ChatMessage _parseTextMessageAttributes(String message) {
+    final List<String> splitted = message.split("::");
+    String? sound;
+    for (int i = 1; i < splitted.length; i++) {
+      final spl = splitted[i];
+      if (spl.trim().toLowerCase().startsWith("sound")) {
+        sound = spl.trim().toLowerCase().split(" ")[1];
+      }
+    }
+    return ChatMessage(contents: splitted[0], type: MessageType.text, creationDate: DateTime.now(), origin: MessageOrigin.other, sound: sound);
+  }
 
   void _onTextMessageReceived(String contents, DateTime creationDate) {
-    final msg = ChatMessage(contents: contents, type: MessageType.text, creationDate: creationDate, origin: MessageOrigin.other);
+    final msg = _parseTextMessageAttributes(contents);
     addMessageToStream(msg);
   }
 
