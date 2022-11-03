@@ -26,7 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   NestedNavigationService.getNearest(context)
                       .push(route: "chat");
                 },
-                icon: const Icon(Icons.chat_rounded))
+                icon: const Icon(Icons.chat_rounded)),
+            IconButton(
+                onPressed: () {
+                  NestedNavigationService.getNearest(context)
+                      .push(route: "info");
+                },
+                icon: const Icon(Icons.info_outline))
           ],
         ),
         body: BlocBuilder<MumbleBloc, MumbleState>(
