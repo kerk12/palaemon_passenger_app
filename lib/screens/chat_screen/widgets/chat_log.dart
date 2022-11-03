@@ -16,6 +16,7 @@ class ChatLog extends StatefulWidget {
 class _ChatLogState extends State<ChatLog> {
   late StreamSubscription<ChatMessage> chatStream;
   List<ChatMessage> messages = [];
+  final ScrollController _messageListScrollController = ScrollController();
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _ChatLogState extends State<ChatLog> {
       setState(() {
         messages = ms.messages;
       });
+      _messageListScrollController.jumpTo(_messageListScrollController.position.maxScrollExtent);
     });
   }
 
@@ -40,7 +42,9 @@ class _ChatLogState extends State<ChatLog> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) =>
+    return ListView.builder(
+      controller: _messageListScrollController,
+      itemBuilder: (context, index) =>
       ChatBubbleContainer(messages[index]),
       itemCount: messages.length,);
   }
