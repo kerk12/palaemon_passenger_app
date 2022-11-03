@@ -29,10 +29,10 @@ class InfoScreen extends StatelessWidget {
               const SizedBox(height: 15),
               Wrap(
                 children: [
-                  const Text("Developed by the , ", style: textStyling),
-                  InkWell(child: const Text("UAegean | i4m Lab",style: linkStyling),onTap: () => launch('http://www.atlantis-group.gr/i4Mlab/'),),
+                  const Text("Developed by the ", style: textStyling),
+                  InkWell(child: const Text("UAegean | i4m Lab",style: linkStyling),onTap: () => launchUrl(Uri.parse('http://www.atlantis-group.gr/i4Mlab/'), mode: LaunchMode.externalApplication), ),
                   const Text(" and the ",style: textStyling),
-                  InkWell(child:const Text("PALAEMON Consortium", style: linkStyling),onTap: () => launchUrlString('https://palaemonproject.eu/'),),
+                  InkWell(child:const Text("PALAEMON Consortium", style: linkStyling),onTap: () => launchUrl(Uri.parse('https://palaemonproject.eu/'), mode: LaunchMode.externalApplication),),
                 ],
               ),
             ],
