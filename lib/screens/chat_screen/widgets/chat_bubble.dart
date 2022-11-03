@@ -13,31 +13,7 @@ class ChatBubble extends StatelessWidget {
     if (_message.type == MessageType.text) {
       return Html(
           data: _message.contents,
-        style: {
-            "img": Style(
-              width: 50,
-              height: 50
-            ),
-          "header": Style(
-              // padding: EdgeInsets.symmetric(vertical: 10),
-            ),
-            "header img": Style(
-                width: 50,
-                height: 50,
-                display: Display.BLOCK,
-              alignment: Alignment.center
-            ),
-          "header h1": Style(
-            color: Colors.red,
-            textAlign: TextAlign.center
-          )
-        },
       );
-      // return Text(_message.contents, style: TextStyle(
-      //   color: _message.origin == MessageOrigin.me
-      //       ? Colors.white
-      //       : null
-      // ),);
     }
 
     return Image.memory(base64Decode(_message.contents));
