@@ -11,9 +11,20 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_message.type == MessageType.text) {
-      return Html(
+      // If the message is of type Text, check if there's HTML in the message.
+      final htmlPattern = RegExp(r"<.*?>");
+
+      // If there is, render the HTML.
+      if (htmlPattern.hasMatch(_message.contents)) {
+        return Html(
           data: _message.contents,
-      );
+        );
+      }
+      // Otherwise, just render a simple text widget.
+      // We could've just rendered the HTML tag but it gets the full width of the
+      // parent and it looks really bad.
+      return Text(_message.contents);
+
     }
 
     return Image.memory(base64Decode(_message.contents));

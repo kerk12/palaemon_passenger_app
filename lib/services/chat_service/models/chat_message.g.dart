@@ -11,7 +11,7 @@ ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => ChatMessage(
       type: $enumDecode(_$MessageTypeEnumMap, json['type']),
       creationDate: DateTime.parse(json['creationDate'] as String),
       origin: $enumDecode(_$MessageOriginEnumMap, json['origin']),
-      sound: json['sound'] as String,
+      sound: json['sound'] as String?,
     );
 
 Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
