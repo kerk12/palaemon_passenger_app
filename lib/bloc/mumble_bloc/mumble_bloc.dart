@@ -106,6 +106,7 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
           await FlutterBackground.disableBackgroundExecution();
           emit(Disconnected());
         }, onMessageReceived: (IncomingTextMessage message) {
+
           chatService.onRawMessageReceived(message.message);
         }
         ));

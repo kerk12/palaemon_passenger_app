@@ -12,6 +12,7 @@ import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
 import 'package:flutter_background/flutter_background.dart';
 import 'package:palaemon_passenger_app/services/notification_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,9 @@ void main() async {
       notificationImportance: AndroidNotificationImportance.Default,
       enableWifiLock: true);
   await FlutterBackground.initialize(androidConfig: androidConfig);
-
+  await Permission.location.request();
+  await Permission.bluetoothScan.request();
+  await Permission.bluetoothConnect.request();
   runApp(const MyApp());
 }
 

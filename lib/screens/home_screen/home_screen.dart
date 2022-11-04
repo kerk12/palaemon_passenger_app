@@ -1,9 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palaemon_passenger_app/bloc/mumble_bloc/mumble_bloc.dart';
 import 'package:palaemon_passenger_app/screens/home_screen/widgets/need_help_button.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:palaemon_passenger_app/services/nested_navigation_service.dart';
+import 'package:palaemon_passenger_app/situm.dart';
+
+import '../../config.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late MumbleService ms;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.info_outline))
           ],
         ),
-        body: BlocBuilder<MumbleBloc, MumbleState>(
+        body: BlocConsumer<MumbleBloc, MumbleState>(
+          listener: (context, state) async {
+            if (state is Connected) {
+              final config = context.read<Config>();
+              await Situm.configure(email: config.situmEmail, apiKey: config.situmPassword);
+              await Situm.start();
+            }
+            if (state is Disconnected) {
+              await Situm.disconnect();
+            }
+          },
           builder: (context, state) {
             if (state is Connected) {
               return Column(children: [
