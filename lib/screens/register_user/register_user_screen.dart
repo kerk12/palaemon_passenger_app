@@ -25,11 +25,15 @@ class RegisterUser extends StatelessWidget {
                           'assets/images/palaemon_ship_logo.png'),
                     ),
                   ),
-                  Flexible(child: const Text("Passenger Registration",
-                      style: TextStyle(
-                          fontSize: 25,
-                        fontWeight: FontWeight.bold
-                      )
+                  const Flexible(child: Padding(
+                    padding: EdgeInsets.only(top:12.0),
+                    child: Text("Passenger Registration",
+                        style: TextStyle(
+                            fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff1F9AD6)
+                        )
+                    ),
                   )),
                 ],
               )),

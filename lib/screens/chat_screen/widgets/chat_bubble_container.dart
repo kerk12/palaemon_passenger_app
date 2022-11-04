@@ -24,6 +24,7 @@ class ChatBubbleContainer extends StatelessWidget {
                   : Alignment.centerRight,
               child: Row(
                 mainAxisAlignment: !otherSideSending ? MainAxisAlignment.end : MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   otherSideSending ? const Padding(
                       padding: EdgeInsets.only(right:4.0),

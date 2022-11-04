@@ -23,7 +23,7 @@ class ChatBubble extends StatelessWidget {
       // Otherwise, just render a simple text widget.
       // We could've just rendered the HTML tag but it gets the full width of the
       // parent and it looks really bad.
-      return Text(_message.contents);
+      return Text(_message.contents,style: const TextStyle(fontSize:14),);
 
     }
 

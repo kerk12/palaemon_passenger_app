@@ -12,6 +12,7 @@ import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
 import 'package:flutter_background/flutter_background.dart';
 import 'package:palaemon_passenger_app/services/notification_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -83,6 +84,10 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: buildMaterialColor(const Color(0xff1F9AD6)),
+              textTheme: GoogleFonts.openSansTextTheme
+                (
+                  Theme.of(context).textTheme
+              ),
             ),
             initialRoute: "landing",
             routes: {"landing": (context) => const LandingPage()},
