@@ -16,6 +16,10 @@ class MumbleService {
     client!.add(callback);
   }
 
+  void reset() {
+    client = null;
+  }
+
   void sendMessage(ChatMessage message, {List<User>? users, List<Channel>? channels}) {
     if (users != null) {
       client?.sendMessage(message: OutgoingTextMessage(message: message.contents, clients: users));

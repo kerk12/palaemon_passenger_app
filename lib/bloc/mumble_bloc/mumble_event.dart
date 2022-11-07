@@ -10,4 +10,8 @@ abstract class MumbleEvent extends Equatable {
 
 class Connect extends MumbleEvent {}
 
-class Disconnect extends MumbleEvent {}
+class Disconnect extends MumbleEvent {
+  final bool retry;
+
+  Disconnect(this.retry);
+}

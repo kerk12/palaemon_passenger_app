@@ -28,6 +28,8 @@ void main() async {
   await Permission.location.request();
   await Permission.bluetoothScan.request();
   await Permission.bluetoothConnect.request();
+  await FlutterBackground.enableBackgroundExecution();
+
   runApp(const MyApp());
 }
 
@@ -116,6 +118,7 @@ class LandingPage extends StatelessWidget {
           ],
           child: BlocProvider<MumbleBloc>(
             create: (context) => MumbleBloc(
+              notificationService: context.read<NotificationService>(),
               mumbleService: context.read<MumbleService>(),
               chatService: context.read<ChatService>(),
             )..add(Connect()),

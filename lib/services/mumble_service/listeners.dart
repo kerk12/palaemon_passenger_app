@@ -44,9 +44,7 @@ class EvacAssistantUserListener with MumbleClientListener, UserListener {
   }
 
   @override
-  void onDone() {
-    client.remove(this);
-  }
+  void onDone() {}
 
   @override
   void onDropAllChannelPermissions() {
@@ -54,9 +52,7 @@ class EvacAssistantUserListener with MumbleClientListener, UserListener {
   }
 
   @override
-  void onError(Object error, [StackTrace? stackTrace]) {
-    client.remove(this);
-  }
+  void onError(Object error, [StackTrace? stackTrace]) {}
 
   @override
   void onPermissionDenied(PermissionDeniedException e) {
