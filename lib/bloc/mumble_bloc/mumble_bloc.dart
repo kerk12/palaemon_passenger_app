@@ -116,10 +116,8 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
   MumbleBloc({required this.mumbleService, required this.chatService, required this.notificationService})
       : super(Disconnected()) {
     on<Disconnect>((event, emit) async {
-      // if (FlutterBackground.isBackgroundExecutionEnabled) {
-      //   await FlutterBackground.disableBackgroundExecution();
-      // }
       if (!_disconnectNotifShown) {
+        // Set the bool notification at the end so that the notification doesn't appear again and again.
         notificationService.showNotification(title: "Disconnected from the PALAEMON Network", msg: "You have been disconnected from the PALAEMON network. The device will come back online as soon as service is resumed.").then((_) => _disconnectNotifShown = true);
       }
       emit(Disconnected());
@@ -140,6 +138,7 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
         return;
       }
       if (!_isInitialized) {
+        // Add a message and connection listener.
         mumbleService.addCallback(ConnectionListener(
             onDisconnect: onDisconnected,
             onMessageReceived: (IncomingTextMessage message) {
@@ -151,6 +150,8 @@ class MumbleBloc extends Bloc<MumbleEvent, MumbleState> {
         }));
         _isInitialized = true;
       }
+
+      // When the connection is restored, show a back online notif.
       if (_disconnectNotifShown) {
         notificationService.showNotification(title: "Back Online", msg: "You have been reconnected to the PALAEMON network.")
             .then((_) => _disconnectNotifShown = false);
