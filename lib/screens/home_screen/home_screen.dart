@@ -42,13 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: BlocConsumer<MumbleBloc, MumbleState>(
           listener: (context, state) async {
+            final situm = Situm();
+
             if (state is Connected) {
               final config = context.read<Config>();
-              await Situm.configure(email: config.situmEmail, apiKey: config.situmPassword);
-              await Situm.start();
+              await situm.configure(email: config.situmEmail, apiKey: config.situmPassword);
+              await situm.start();
             }
             if (state is Disconnected) {
-              await Situm.disconnect();
+              await situm.disconnect();
             }
           },
           builder: (context, state) {
