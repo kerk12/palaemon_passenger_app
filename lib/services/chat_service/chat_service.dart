@@ -67,7 +67,7 @@ class ChatService {
     // Detect image messages by filtering for the base64 header
     final imageRegex = RegExp(r'data:image\/([a-zA-Z]*);base64,(?<image>[^\"]*)');
 
-    if (imageRegex.hasMatch(msgJson)) {
+    if (msgJson.startsWith("<img") &&imageRegex.hasMatch(msgJson)) {
       final match = imageRegex.firstMatch(msgJson);
       final imgB64 = match!.namedGroup("image");
 

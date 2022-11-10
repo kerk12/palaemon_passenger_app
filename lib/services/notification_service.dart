@@ -22,14 +22,24 @@ class NotificationService {
 
     AndroidNotificationDetails androidNotificationDetails;
 
-    const channelName = 'PALAEMON Crew Messages';
+    final channelName;
+    final Importance importance;
+    AndroidNotificationSound? notificationSound;
+    // If sound == siren, the message represents an emergency.
+    if (sound?.toLowerCase() == "siren") {
+      channelName = 'PALAEMON Emergency Messages';
+      notificationSound = RawResourceAndroidNotificationSound(sound!.toLowerCase());
+    } else {
+      channelName = 'PALAEMON Crew Messages';
+    }
 
     androidNotificationDetails = AndroidNotificationDetails(
         channelName, channelName,
         importance: Importance.max,
         priority: Priority.high,
         vibrationPattern: vibration ? vibrationPattern : null,
-        sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
+        sound: notificationSound,
+        playSound: notificationSound != null,
         enableVibration: vibration);
 
     var notificationDetails = NotificationDetails(
