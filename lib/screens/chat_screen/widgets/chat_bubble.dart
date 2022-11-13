@@ -17,7 +17,7 @@ class ChatBubble extends StatelessWidget {
       // If there is, render the HTML.
       if (htmlPattern.hasMatch(_message.contents)) {
         return Html(
-          data: _message.contents,
+          data: Uri.decodeComponent(_message.contents),
         );
       }
       // Otherwise, just render a simple text widget.
