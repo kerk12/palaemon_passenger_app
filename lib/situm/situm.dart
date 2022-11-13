@@ -50,5 +50,6 @@ class Situm {
       throw SitumError(cause: "Situm isn't requesting location updates.");
     }
     await situmFlutterSdk.removeUpdates();
+    _running = false;
   }
 }

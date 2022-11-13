@@ -13,4 +13,6 @@ abstract class Config {
   String get situmPassword => "";
   String get situmBuildingId => "";
   String get googleMapsKey => "";
+
+  bool get isSitumDisabled => situmEmail.isEmpty || situmPassword.isEmpty;
 }

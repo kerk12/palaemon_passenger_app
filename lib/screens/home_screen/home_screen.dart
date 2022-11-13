@@ -24,10 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
   late MumbleService ms;
   @override
   Widget build(BuildContext context) {
+    final config = context.read<Config>();
     return Scaffold(
-        floatingActionButton: MumbleConnectionRenderer(
+        floatingActionButton: !config.isSitumDisabled ? MumbleConnectionRenderer(
           onConnected: FloatingActionButton(
             onPressed: () {
+              // TODO Don't push when Situm hasn't been loaded yet.
               NestedNavigationService.getNearest(context).push(route: "map");
             },
             child: const Icon(Icons.map_outlined),
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           onConnecting: const SizedBox.shrink(),
           onDisconnected: const SizedBox.shrink(),
-        ),
+        ) : null,
         appBar: AppBar(
           title: const Text("Palaemon Passenger App"),
           actions: [
@@ -58,9 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
             final situmSdk = Situm();
             final config = context.read<Config>();
             
-            if (state is Connected && !situmSdk.isConfigured) {
+            if (state is Connected && !config.isSitumDisabled && !situmSdk.isConfigured) {
               await situmSdk.configure(email: config.situmEmail, apiKey: config.situmPassword);
               await situmSdk.start(LoggingLocationListener());
+            }
+
+            if (state is Disconnected && situmSdk.isConfigured) {
+              await situmSdk.disconnect();
             }
           },
           builder: (context, state) {
