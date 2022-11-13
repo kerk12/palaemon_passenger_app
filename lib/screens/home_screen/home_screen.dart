@@ -7,7 +7,8 @@ import 'package:palaemon_passenger_app/bloc/mumble_bloc/mumble_bloc.dart';
 import 'package:palaemon_passenger_app/screens/home_screen/widgets/need_help_button.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:palaemon_passenger_app/services/nested_navigation_service.dart';
-import 'package:palaemon_passenger_app/situm.dart';
+import 'package:palaemon_passenger_app/situm/listeners.dart';
+import 'package:palaemon_passenger_app/situm/situm.dart';
 
 import '../../config.dart';
 
@@ -42,18 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: BlocConsumer<MumbleBloc, MumbleState>(
           listener: (context, state) async {
+            final situmSdk = Situm();
             final config = context.read<Config>();
-
-            if (config.situmEmail.isNotEmpty && config.situmPassword.isNotEmpty) {
-              final situm = Situm();
-
-              if (state is Connected) {
-                await situm.configure(email: config.situmEmail, apiKey: config.situmPassword);
-                await situm.start();
-              }
-              if (state is Disconnected) {
-                await situm.disconnect();
-              }
+            
+            if (state is Connected && !situmSdk.isConfigured) {
+              await situmSdk.configure(email: config.situmEmail, apiKey: config.situmPassword);
+              await situmSdk.start(LoggingLocationListener());
             }
           },
           builder: (context, state) {

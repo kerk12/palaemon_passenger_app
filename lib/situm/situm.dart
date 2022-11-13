@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:situm_flutter_wayfinding/situm_flutter_sdk.dart';
 
 class SitumError implements Exception {
   final String cause;
@@ -10,36 +11,44 @@ class SitumError implements Exception {
 class Situm {
   static const _situmChannel = MethodChannel("palaemon.situm");
   static final Situm _instance = Situm._internal();
+  SitumFlutterSDK situmFlutterSdk;
 
-  Situm._internal();
+  Situm._internal() : this.situmFlutterSdk = SitumFlutterSDK();
 
   factory Situm() {
     return _instance;
   }
 
-  bool _configured = false;
+  bool _configured = false, _running = false;
 
   bool get isConfigured => _configured;
+  bool get isRunning => _running;
 
   /// Configures the SDK with the given credentials.
   Future<void> configure({required email, required apiKey}) async {
-    await _situmChannel
-        .invokeMethod("configure", {"email": email, "api_key": apiKey});
+    situmFlutterSdk.init(email, apiKey);
+    situmFlutterSdk
+        .setConfiguration(ConfigurationOptions(useRemoteConfig: false));
     _configured = true;
   }
 
   /// Initiates the Situm connection. Make sure to call [configure] before calling [start].
-  Future<void> start() async {
+  Future<void> start(LocationListener locationListener,
+      {Map<String, dynamic> locationRequest = const {}}) async {
     if (!_configured) {
       throw SitumError(
           cause:
               "Situm hasn't been configured yet. Did you forget to call .configure()?");
     }
-    await _situmChannel.invokeMethod("start");
+    await situmFlutterSdk.requestLocationUpdates(
+        locationListener, locationRequest);
   }
 
   /// Disconnects from the Situm SDK.
   Future<void> disconnect() async {
-    await _situmChannel.invokeMethod("disconnect");
+    if (!isRunning) {
+      throw SitumError(cause: "Situm isn't requesting location updates.");
+    }
+    await situmFlutterSdk.removeUpdates();
   }
 }

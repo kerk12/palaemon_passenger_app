@@ -55,6 +55,14 @@ dependencies:
   url_launcher: ^6.1.6
   permission_handler: ^10.2.0
 
+  situm_flutter_wayfinding:
+    # When depending on this package from a real application you should use:
+    #   situm_flutter_wayfinding: ^x.y.z
+    # See https://dart.dev/tools/pub/dependencies#version-constraints
+    # The example app is bundled with the plugin so we use a path dependency on
+    # the parent directory to use the current plugin's version.
+    path: "../flutter-wayfinding"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
