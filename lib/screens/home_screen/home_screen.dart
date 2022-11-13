@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palaemon_passenger_app/bloc/mumble_bloc/mumble_bloc.dart';
+import 'package:palaemon_passenger_app/bloc/mumble_bloc/widgets/mumble_connection_renderer.dart';
 import 'package:palaemon_passenger_app/screens/home_screen/widgets/need_help_button.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:palaemon_passenger_app/services/nested_navigation_service.dart';
@@ -24,12 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            NestedNavigationService.getNearest(context).push(route: "map");
-          },
-          child: const Icon(Icons.map_outlined),
+        floatingActionButton: MumbleConnectionRenderer(
+          onConnected: FloatingActionButton(
+            onPressed: () {
+              NestedNavigationService.getNearest(context).push(route: "map");
+            },
+            child: const Icon(Icons.map_outlined),
 
+          ),
+          onConnecting: const SizedBox.shrink(),
+          onDisconnected: const SizedBox.shrink(),
         ),
         appBar: AppBar(
           title: const Text("Palaemon Passenger App"),
