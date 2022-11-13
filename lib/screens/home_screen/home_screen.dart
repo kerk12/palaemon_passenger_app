@@ -24,6 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            NestedNavigationService.getNearest(context).push(route: "map");
+          },
+          child: const Icon(Icons.map_outlined),
+
+        ),
         appBar: AppBar(
           title: const Text("Palaemon Passenger App"),
           actions: [
