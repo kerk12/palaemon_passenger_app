@@ -41,7 +41,7 @@ class MumbleService {
 
   MumbleService({required this.user, required Config config})
       : _connectionOptions = ConnectionOptions(
-            host: config.mumbleServer, port: 64738, name: user.mumbleName);
+            host: config.mumbleServer, port: config.mumblePort, name: user.mumbleName);
 
   User? _updateEvacAssistantUser() {
     for (User user in client!.getUsers().values) {

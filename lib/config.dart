@@ -2,6 +2,7 @@ part "production_config.dart";
 
 abstract class Config {
   String get mumbleServer => "127.0.0.1";
+  int get mumblePort => 64739;
   String get personManagementServer => "http://dss.aegean.gr:8090/";
   String get authenticationServer => "http://localhost:8080";
   String get clientSecret => "";

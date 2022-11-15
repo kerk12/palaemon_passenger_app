@@ -40,12 +40,18 @@ class _ChatLogState extends State<ChatLog> {
     await chatStream.cancel();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       controller: _messageListScrollController,
       itemBuilder: (context, index) =>
-      ChatBubbleContainer(messages[index]),
+      InteractiveViewer(
+          boundaryMargin: const EdgeInsets.all(30.0),
+          minScale: 0.1,
+          maxScale: 1.6,
+          child: ChatBubbleContainer(messages[index])),
       itemCount: messages.length,);
   }
 }

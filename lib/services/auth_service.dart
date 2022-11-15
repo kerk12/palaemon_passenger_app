@@ -61,9 +61,9 @@ class AuthService {
     try {
       response = await client.post("registerDevice", data: {
         "macAddress": "58:37:8B:DE:42:B4",
-        "imsi": "470040123456789",
-        "imei": "449244690297679",
-        "mumbleName": mumbleUsername
+        // "imsi": "470040123456789",
+        // "imei": "449244690297679",
+        "ticketNumber": mumbleUsername
       });
     } on Exception {}
 

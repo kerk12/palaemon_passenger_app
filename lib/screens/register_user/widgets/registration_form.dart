@@ -25,7 +25,7 @@ class RegisterUserForm extends StatelessWidget {
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
-                  labelText: 'Enter your username',
+                  labelText: 'Enter your ticket number',
                   labelStyle: const TextStyle(
                     color: Colors.black54,
                      fontSize: 17,
@@ -51,12 +51,12 @@ class RegisterUserForm extends StatelessWidget {
                       !valRegex.hasMatch(value) ||
                       value.startsWith(whitespaceRegex) ||
                       value.endsWith("_"))
-                  ? "Please enter a valid user name."
+                  ? "Please enter a valid ticket number."
                   : null;
                 },
               ),
               const SizedBox(height: 4,),
-              const Text("Please only use a combination of lowercase letters, uppercase letters and underscores (_)",
+              const Text("Please enter your ticket number, as it appears on your ticket.",
                 style: TextStyle(color: Colors.white70,fontSize: 12, fontWeight:FontWeight.bold), textAlign: TextAlign.justify,),
               const SizedBox(height: 12,),
               SizedBox(
