@@ -48,7 +48,7 @@ class RegisterUserForm extends StatelessWidget {
               final whitespaceRegex = RegExp(r"\W");
               return (value == null ||
                       value.isEmpty ||
-                      !valRegex.hasMatch(value) ||
+                      // !valRegex.hasMatch(value) ||
                       value.startsWith(whitespaceRegex) ||
                       value.endsWith("_"))
                   ? "Please enter a valid ticket number."
