@@ -12,4 +12,8 @@ abstract class Config {
   Map<String, String> get authCookies => {};
   String get situmEmail => "";
   String get situmPassword => "";
+  String get situmBuildingId => "";
+  String get googleMapsKey => "";
+
+  bool get isSitumDisabled => situmEmail.isEmpty || situmPassword.isEmpty;
 }

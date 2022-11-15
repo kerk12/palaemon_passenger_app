@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palaemon_passenger_app/bloc/mumble_bloc/mumble_bloc.dart';
+import 'package:palaemon_passenger_app/bloc/mumble_bloc/widgets/mumble_connection_renderer.dart';
 import 'package:palaemon_passenger_app/screens/home_screen/widgets/need_help_button.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:palaemon_passenger_app/services/nested_navigation_service.dart';
-import 'package:palaemon_passenger_app/situm.dart';
+import 'package:palaemon_passenger_app/situm/listeners.dart';
+import 'package:palaemon_passenger_app/situm/situm.dart';
 
 import '../../config.dart';
 
@@ -22,7 +24,20 @@ class _HomeScreenState extends State<HomeScreen> {
   late MumbleService ms;
   @override
   Widget build(BuildContext context) {
+    final config = context.read<Config>();
     return Scaffold(
+        floatingActionButton: !config.isSitumDisabled ? MumbleConnectionRenderer(
+          onConnected: FloatingActionButton(
+            onPressed: () {
+              // TODO Don't push when Situm hasn't been loaded yet.
+              NestedNavigationService.getNearest(context).push(route: "map");
+            },
+            child: const Icon(Icons.map_outlined),
+
+          ),
+          onConnecting: const SizedBox.shrink(),
+          onDisconnected: const SizedBox.shrink(),
+        ) : null,
         appBar: AppBar(
           title: const Text("Palaemon Passenger App"),
           actions: [
@@ -42,18 +57,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: BlocConsumer<MumbleBloc, MumbleState>(
           listener: (context, state) async {
+            final situmSdk = Situm();
             final config = context.read<Config>();
+            
+            if (state is Connected && !config.isSitumDisabled && !situmSdk.isConfigured) {
+              await situmSdk.configure(email: config.situmEmail, apiKey: config.situmPassword);
+              await situmSdk.start(LoggingLocationListener());
+            }
 
-            if (config.situmEmail.isNotEmpty && config.situmPassword.isNotEmpty) {
-              final situm = Situm();
-
-              if (state is Connected) {
-                await situm.configure(email: config.situmEmail, apiKey: config.situmPassword);
-                await situm.start();
-              }
-              if (state is Disconnected) {
-                await situm.disconnect();
-              }
+            if (state is Disconnected && situmSdk.isConfigured) {
+              await situmSdk.disconnect();
             }
           },
           builder: (context, state) {
