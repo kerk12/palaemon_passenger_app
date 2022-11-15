@@ -35,22 +35,13 @@ class ChatBubbleContainer extends StatelessWidget {
                   ): const SizedBox(),
                   Flexible(
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(otherSideSending ? 0xffDBDCDA : 0xff1F9AD6),
-                        borderRadius:  BorderRadius.only(
-                            topLeft: const Radius.circular(_borderRadius),
-                            topRight: const Radius.circular(_borderRadius),
-                            bottomRight: otherSideSending
-                                ? const Radius.circular(_borderRadius)
-                                : Radius.zero,
-                            bottomLeft: !otherSideSending
-                                ? const Radius.circular(_borderRadius)
-                                : Radius.zero
-                        ),
-                      ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
-                        child: ChatBubble(message),
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        child: ChatBubble(
+                          message,
+                          color: message.origin == MessageOrigin.me ?
+                            Colors.blue : null,
+                        ),
                       ),
                     ),
                   ),
@@ -68,6 +59,7 @@ class ChatBubbleContainer extends StatelessWidget {
                   style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),),
             ),
+
           ],
         )
     );

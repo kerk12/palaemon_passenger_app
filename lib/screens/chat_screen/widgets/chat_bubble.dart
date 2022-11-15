@@ -6,7 +6,8 @@ import 'package:palaemon_passenger_app/services/chat_service/models/chat_message
 
 class ChatBubble extends StatelessWidget {
   final ChatMessage _message;
-  const ChatBubble(this._message, {Key? key}) : super(key: key);
+  final Color? color;
+  const ChatBubble(this._message, {Key? key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,12 @@ class ChatBubble extends StatelessWidget {
       // Otherwise, just render a simple text widget.
       // We could've just rendered the HTML tag but it gets the full width of the
       // parent and it looks really bad.
-      return Text(_message.contents);
+      return Text(
+        style: TextStyle(
+          color: color
+        ),
+          _message.contents
+      );
 
     }
 
