@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -65,7 +66,9 @@ class AuthService {
         // "imei": "449244690297679",
         "ticketNumber": mumbleUsername
       });
-    } on Exception {}
+    } on Exception catch (e, stacktrace) {
+      log(stacktrace.toString());
+    }
 
     // if (response.statusCode == 200) {
     final user = User(mumbleName: mumbleUsername);
