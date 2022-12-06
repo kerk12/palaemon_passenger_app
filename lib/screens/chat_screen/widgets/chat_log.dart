@@ -23,13 +23,13 @@ class _ChatLogState extends State<ChatLog> {
     super.initState();
     final ms = context.read<ChatService>();
 
-    messages = ms.messages;
+    messages = ms.messages.reversed.toList();
 
     chatStream = ms.stream.listen((event) {
       setState(() {
-        messages = ms.messages;
+        messages = ms.messages.reversed.toList();
       });
-      _messageListScrollController.jumpTo(_messageListScrollController.position.maxScrollExtent);
+      _messageListScrollController.jumpTo(0);
     });
   }
 
@@ -45,11 +45,13 @@ class _ChatLogState extends State<ChatLog> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      reverse: true,
       controller: _messageListScrollController,
       itemBuilder: (context, index) =>
       InteractiveViewer(
           boundaryMargin: const EdgeInsets.all(30.0),
-          minScale: 0.1,
+          panEnabled: false,
+          minScale: 1,
           maxScale: 1.6,
           child: ChatBubbleContainer(messages[index])),
       itemCount: messages.length,);
