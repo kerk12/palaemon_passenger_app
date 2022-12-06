@@ -855,7 +855,7 @@ packages:
       path: "../flutter-wayfinding"
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   sky_engine:
     dependency: transitive
     description: flutter

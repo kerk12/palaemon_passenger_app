@@ -5,14 +5,22 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class NotificationService {
   late FlutterLocalNotificationsPlugin plugin;
 
-  NotificationService() :
-      plugin = FlutterLocalNotificationsPlugin() {
-        plugin.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings('@mipmap/ic_launcher'),));
+  NotificationService() : plugin = FlutterLocalNotificationsPlugin() {
+    plugin.initialize(const InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+    ));
+
+    var androidPlugin = plugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    androidPlugin!.requestPermission();
   }
 
   Future<void> showNotification(
-      {required String title, required String msg, bool vibration = false, int id = 0, String? sound}) async {
+      {required String title,
+      required String msg,
+      bool vibration = false,
+      int id = 0,
+      String? sound}) async {
     // Define vibration pattern
     var vibrationPattern = Int64List(4);
     vibrationPattern[0] = 0;
@@ -28,7 +36,8 @@ class NotificationService {
     // If sound == siren, the message represents an emergency.
     if (sound?.toLowerCase() == "siren") {
       channelName = 'PALAEMON Emergency Messages';
-      notificationSound = RawResourceAndroidNotificationSound(sound!.toLowerCase());
+      notificationSound =
+          RawResourceAndroidNotificationSound(sound!.toLowerCase());
     } else {
       channelName = 'PALAEMON Crew Messages';
     }
@@ -42,8 +51,8 @@ class NotificationService {
         playSound: notificationSound != null,
         enableVibration: vibration);
 
-    var notificationDetails = NotificationDetails(
-        android: androidNotificationDetails);
+    var notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
 
     try {
       await plugin.show(id, title, msg, notificationDetails);
