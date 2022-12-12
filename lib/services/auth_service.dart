@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:developer' as dev;
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:palaemon_passenger_app/models/user.dart';
@@ -55,19 +56,29 @@ class AuthService {
     return authToken;
   }
 
+  String _getRandomMacAddressSegment() {
+    var random = Random();
+    const chars = "ABCDEF1234567890";
+    return List.generate(2, (index) => chars[random.nextInt(chars.length) - 1]).toList(growable: false).join("");
+  }
+
+  String _getRandomMacAddress() {
+    return List.generate(6, (index) => _getRandomMacAddressSegment()).toList().join(":");
+  }
+
   Future<User> registerToPersonsServer(String mumbleUsername) async {
     authToken = await _authenticate();
 
     final response;
     try {
       response = await client.post("registerDevice", data: {
-        "macAddress": "58:37:8B:DE:42:B4",
+        "macAddress": _getRandomMacAddress(),
         // "imsi": "470040123456789",
         // "imei": "449244690297679",
         "ticketNumber": mumbleUsername
       });
     } on Exception catch (e, stacktrace) {
-      log(stacktrace.toString());
+      dev.log(stacktrace.toString());
     }
 
     // if (response.statusCode == 200) {
