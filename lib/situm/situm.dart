@@ -52,4 +52,8 @@ class Situm {
     await situmFlutterSdk.removeUpdates();
     _running = false;
   }
+
+  Future<int> getDeviceID() async {
+    return await situmFlutterSdk.getDeviceID();
+  }
 }

@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:palaemon_passenger_app/screens/register_user/widgets/registration_form.dart';
+
+import '../../situm/situm.dart';
 
 class RegisterUser extends StatelessWidget {
   static const String routeName = "register";

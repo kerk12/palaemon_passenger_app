@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
         },
         child: BlocProvider<AuthBloc>(
           create: (context) =>
-              AuthBloc(context.read<AuthService>())..add(Initialize()),
+              AuthBloc(context.read<AuthService>(), context.read<Config>())..add(Initialize()),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',

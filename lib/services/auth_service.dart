@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:palaemon_passenger_app/models/user.dart';
+import 'package:palaemon_passenger_app/situm/situm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config.dart';
@@ -66,13 +67,20 @@ class AuthService {
     return List.generate(6, (index) => _getRandomMacAddressSegment()).toList().join(":");
   }
 
-  Future<User> registerToPersonsServer(String mumbleUsername) async {
+  Future<User> registerToPersonsServer(Config config, String mumbleUsername) async {
     authToken = await _authenticate();
+
+    final situmSdk = Situm();
+    if (!config.isSitumDisabled) {
+      await situmSdk.configure(email: config.situmEmail, apiKey: config.situmPassword);
+    }
 
     final response;
     try {
       response = await client.post("registerDevice", data: {
         "macAddress": _getRandomMacAddress(),
+        if (!config.isSitumDisabled)
+          "deviceID": await situmSdk.getDeviceID(),
         // "imsi": "470040123456789",
         // "imei": "449244690297679",
         "ticketNumber": mumbleUsername
