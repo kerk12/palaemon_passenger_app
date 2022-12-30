@@ -26,18 +26,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final config = context.read<Config>();
     return Scaffold(
-        // floatingActionButton: !config.isSitumDisabled ? MumbleConnectionRenderer(
-        //   onConnected: FloatingActionButton(
-        //     onPressed: () {
-        //       // TODO Don't push when Situm hasn't been loaded yet.
-        //       NestedNavigationService.getNearest(context).push(route: "map");
-        //     },
-        //     child: const Icon(Icons.map_outlined),
-        //
-        //   ),
-        //   onConnecting: const SizedBox.shrink(),
-        //   onDisconnected: const SizedBox.shrink(),
-        // ) : null,
+        floatingActionButton: !config.isSitumDisabled ? MumbleConnectionRenderer(
+          onConnected: FloatingActionButton(
+            onPressed: () {
+              // TODO Don't push when Situm hasn't been loaded yet.
+              NestedNavigationService.getNearest(context).push(route: "map");
+            },
+            child: const Icon(Icons.map_outlined),
+
+          ),
+          onConnecting: const SizedBox.shrink(),
+          onDisconnected: const SizedBox.shrink(),
+        ) : null,
         appBar: AppBar(
           title: const Text("Palaemon Passenger App"),
           actions: [

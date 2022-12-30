@@ -28,7 +28,7 @@ class Situm {
   Future<void> configure({required email, required apiKey}) async {
     situmFlutterSdk.init(email, apiKey);
     situmFlutterSdk
-        .setConfiguration(ConfigurationOptions(useRemoteConfig: false));
+        .setConfiguration(ConfigurationOptions(useRemoteConfig: true));
     _configured = true;
   }
 
