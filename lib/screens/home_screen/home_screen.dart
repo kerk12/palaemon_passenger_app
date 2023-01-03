@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final situmSdk = Situm();
             final config = context.read<Config>();
             
-            if (state is Connected && !config.isSitumDisabled && !situmSdk.isConfigured) {
+            if (state is Connected && !config.isSitumDisabled) {
 
               if (!situmSdk.isConfigured) {
                 await situmSdk.configure(email: config.situmEmail, apiKey: config.situmPassword);

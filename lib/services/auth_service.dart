@@ -78,9 +78,8 @@ class AuthService {
     final response;
     try {
       response = await client.post("registerDevice", data: {
-        "macAddress": _getRandomMacAddress(),
-        if (!config.isSitumDisabled)
-          "deviceID": await situmSdk.getDeviceID(),
+        "macAddress": !config.isSitumDisabled ?
+          await situmSdk.getDeviceID() : _getRandomMacAddress(),
         // "imsi": "470040123456789",
         // "imei": "449244690297679",
         "ticketNumber": mumbleUsername
