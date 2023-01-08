@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:palaemon_passenger_app/logger.dart';
 import 'package:palaemon_passenger_app/services/chat_service/chat_service.dart';
 import 'package:palaemon_passenger_app/services/mumble_service.dart';
 import 'package:palaemon_passenger_app/services/nested_navigation_service.dart';
@@ -39,6 +40,7 @@ class NeedHelpButton extends StatelessWidget {
                     creationDate: DateTime.now(),
                     origin: MessageOrigin.me),
                 users: [(mumbleService.evacAssistantUser)!]);
+            Logger.log("SOS_BUTTON_CLICKED");
             NestedNavigationService.getNearest(context).push(route: "chat");
             context.read<NotificationService>().showNotification(
                 title: "Help is on the way!",
