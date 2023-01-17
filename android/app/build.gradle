@@ -87,7 +87,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation ('es.situm:situm-sdk:2.80.1@aar') {
+    implementation ('es.situm:situm-sdk:2.83.5@aar') {
         transitive = true
     }
 }
